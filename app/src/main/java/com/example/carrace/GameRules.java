@@ -8,7 +8,7 @@ public class GameRules {
     public static final int ROCK = 1;
     public static final int COIN = 2;
     public static final int ROCKET = 3;
-    public static final int COLITIONLAYER = 6;
+    public static final int COLITIONLAYER = 9;
 
     private int RockAppearOnEven = 0;
 
@@ -19,7 +19,10 @@ public class GameRules {
             {0,0,0},
             {0,0,0},
             {0,0,0},
-            {0,0,0}};
+            {0,0,0},
+                    {0,0,0},
+                    {0,0,0},
+                    {0,0,0}};
 
     private int [] rocket = {0,3,0};
 

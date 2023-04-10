@@ -3,7 +3,9 @@ package com.example.carrace;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     private GameRules gameRules = new GameRules(new Random());
 
+    Vibrator v;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        v  = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         initViews();
         setTick();
     }
@@ -148,7 +152,10 @@ public class MainActivity extends AppCompatActivity {
                 {findViewById(R.id.main_IMG_meteor_20),findViewById(R.id.main_IMG_meteor_21),findViewById(R.id.main_IMG_meteor_22)},
                 {findViewById(R.id.main_IMG_meteor_30),findViewById(R.id.main_IMG_meteor_31),findViewById(R.id.main_IMG_meteor_32)},
                 {findViewById(R.id.main_IMG_meteor_40),findViewById(R.id.main_IMG_meteor_41),findViewById(R.id.main_IMG_meteor_42)},
-                {findViewById(R.id.main_IMG_meteor_50),findViewById(R.id.main_IMG_meteor_51),findViewById(R.id.main_IMG_meteor_52)}};
+                {findViewById(R.id.main_IMG_meteor_50),findViewById(R.id.main_IMG_meteor_51),findViewById(R.id.main_IMG_meteor_52)},
+                {findViewById(R.id.main_IMG_meteor_60),findViewById(R.id.main_IMG_meteor_61),findViewById(R.id.main_IMG_meteor_62)},
+                {findViewById(R.id.main_IMG_meteor_70),findViewById(R.id.main_IMG_meteor_71),findViewById(R.id.main_IMG_meteor_72)},
+                {findViewById(R.id.main_IMG_meteor_80),findViewById(R.id.main_IMG_meteor_81),findViewById(R.id.main_IMG_meteor_82)}};
 
         for (int i =0; i<meteorites.length; i++){
             for(int j=0; j<meteorites[0].length;j++){
@@ -186,8 +193,9 @@ public class MainActivity extends AppCompatActivity {
         livescount--;
         lives[livescount].setVisibility(View.INVISIBLE);
 
-        btn_Right.setEnabled(false);
-        btn_Left.setEnabled(false);
+        v.vibrate(DELAY);
+        //btn_Right.setEnabled(false);
+        //btn_Left.setEnabled(false);
 
         if(livescount==0)
             gameOver();
@@ -197,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
         onStop();
         btn_Right.setEnabled(false);
         btn_Left.setEnabled(false);
+        v.cancel();
     }
 
     private void updateRocketUI() {
