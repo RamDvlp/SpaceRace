@@ -12,61 +12,62 @@ public class GameRules {
 
     private int RockAppearOnEven = 0;
 
-    private int [][] gameMesh =
-            {{0,0,0},
-            {0,0,0},
-            {0,0,0},
-            {0,0,0},
-            {0,0,0},
-            {0,0,0},
-            {0,0,0},
-                    {0,0,0},
-                    {0,0,0},
-                    {0,0,0}};
+    private int[][] gameMesh =
+            {{0, 0, 0},
+                    {0, 0, 0},
+                    {0, 0, 0},
+                    {0, 0, 0},
+                    {0, 0, 0},
+                    {0, 0, 0},
+                    {0, 0, 0},
+                    {0, 0, 0},
+                    {0, 0, 0},
+                    {0, 0, 0}};
 
-    private int [] rocket = {0,3,0};
+    private int[] rocket = {0, 3, 0};
 
     private boolean isColition = false;
     private int currentRocketLocation = 1;
 
     private Random random;
-    private boolean coinColected;
+    private boolean coinColected = false;
 
-    public GameRules() {}
+    public GameRules() {
+    }
 
     public GameRules(Random random) {
         this.random = random;
     }
 
-    public void updateRocketLocation(int loc){
+    public void updateRocketLocation(int loc) {
 
         for (int i = 0; i < rocket.length; i++) {
-            rocket[i]=NOTHING;
+            rocket[i] = NOTHING;
         }
-        this.rocket[loc]=ROCKET;
+        this.rocket[loc] = ROCKET;
         currentRocketLocation = loc;
 
     }
 
-    public void moveRocket(boolean left){
+    public void moveRocket(boolean left) {
 
-        if(left){
-            if(rocket[0]==ROCKET) {
+        if (left) {
+            if (rocket[0] == ROCKET) {
                 return;
             } else {
-                for (int i =1; i<rocket.length;i++){
-                    if(rocket[i] == ROCKET){
-                        updateRocketLocation(i-1);
+                for (int i = 1; i < rocket.length; i++) {
+                    if (rocket[i] == ROCKET) {
+                        updateRocketLocation(i - 1);
                     }
                 }
             }
         } else {
-            if(rocket[2]==ROCKET) {
+            if (rocket[2] == ROCKET) {
                 return;
             } else {
-                for (int i =0; i<rocket.length-1;i++){
-                    if(rocket[i] == ROCKET){
-                        updateRocketLocation(i+1);
+                for (int i = 0; i < rocket.length - 1; i++) {
+                    if (rocket[i] == ROCKET) {
+                        updateRocketLocation(i + 1);
                         break;
                     }
                 }
@@ -76,16 +77,16 @@ public class GameRules {
 
     }
 
-    public void updateGameMesh(){
+    public void updateGameMesh() {
 
-        for(int i=gameMesh.length-2;i >=0 ;i--){
-            for (int k=gameMesh[0].length-1;k>=0 ;k--){
-                if(gameMesh[i][k]==ROCK){
-                    gameMesh[i+1][k] =ROCK;
+        for (int i = gameMesh.length - 2; i >= 0; i--) {
+            for (int k = gameMesh[0].length - 1; k >= 0; k--) {
+                if (gameMesh[i][k] == ROCK) {
+                    gameMesh[i + 1][k] = ROCK;
                     gameMesh[i][k] = NOTHING;
                 }
-                if(gameMesh[i][k]==COIN){
-                    gameMesh[i+1][k] =COIN;
+                if (gameMesh[i][k] == COIN) {
+                    gameMesh[i + 1][k] = COIN;
                     gameMesh[i][k] = NOTHING;
                 }
             }
@@ -120,16 +121,16 @@ public class GameRules {
 
     }
 
-    public void setColition (){
+    public void setColition() {
 
-        if(gameMesh[COLITIONLAYER][currentRocketLocation] == ROCK){
+        if (gameMesh[COLITIONLAYER][currentRocketLocation] == ROCK) {
             isColition = true;
         } else {
             isColition = false;
         }
 
 
-        if(gameMesh[COLITIONLAYER][currentRocketLocation] == COIN){
+        if (gameMesh[COLITIONLAYER][currentRocketLocation] == COIN) {
             coinColected = true;
         } else {
             coinColected = false;

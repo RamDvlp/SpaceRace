@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int livescount = 3;
     private Timer timer;
-    private int score =0;
+    private int score = 0;
     private MaterialTextView score_LBL;
 
     private MaterialButton btn_Left;
@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private GameRules gameRules = new GameRules(new Random());
 
     Vibrator v;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        v  = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         initViews();
         setTick();
     }
@@ -70,10 +71,9 @@ public class MainActivity extends AppCompatActivity {
     private void setTick() {
 
 
-
         gameRules.updateGameMesh();
 
-        if(gameRules.isCoinColected()) {
+        if (gameRules.isCoinColected()) {
             score += 10;
             String displayScore = String.valueOf(score);
             score_LBL.setText(displayScore);
@@ -81,34 +81,31 @@ public class MainActivity extends AppCompatActivity {
         }
 
         int[][] rocklocs = gameRules.getGameMesh();
-        for(int i=0;i<meteorites.length;i++){
-            for(int k=0;k<meteorites[0].length;k++){
-                if(rocklocs[i][k] == GameRules.ROCK){
+        for (int i = 0; i < meteorites.length; i++) {
+            for (int k = 0; k < meteorites[0].length; k++) {
+                if (rocklocs[i][k] == GameRules.ROCK) {
                     meteorites[i][k].setImageResource(R.drawable.meteore);
                     meteorites[i][k].setVisibility(View.VISIBLE);
                 }
-                if(rocklocs[i][k] == GameRules.COIN){
+                if (rocklocs[i][k] == GameRules.COIN) {
                     meteorites[i][k].setImageResource(R.drawable.ic_coin);
                     meteorites[i][k].setVisibility(View.VISIBLE);
                 }
-                if(rocklocs[i][k] == GameRules.NOTHING){
+                if (rocklocs[i][k] == GameRules.NOTHING) {
                     meteorites[i][k].setVisibility(View.INVISIBLE);
                 }
             }
         }
 
-        if(gameRules.isColition()){
+        if (gameRules.isColition()) {
             preformColition();
 
-        }else{
+        } else {
             btn_Right.setEnabled(true);
             btn_Left.setEnabled(true);
 
             postColition();
         }
-
-
-
 
 
     }
@@ -149,16 +146,16 @@ public class MainActivity extends AppCompatActivity {
         score_LBL = findViewById(R.id.game_LBL_score);
         meteorites = new AppCompatImageView[][]{{findViewById(R.id.main_IMG_meteor_00), findViewById(R.id.main_IMG_meteor_01), findViewById(R.id.main_IMG_meteor_02)},
                 {findViewById(R.id.main_IMG_meteor_10), findViewById(R.id.main_IMG_meteor_11), findViewById(R.id.main_IMG_meteor_12)},
-                {findViewById(R.id.main_IMG_meteor_20),findViewById(R.id.main_IMG_meteor_21),findViewById(R.id.main_IMG_meteor_22)},
-                {findViewById(R.id.main_IMG_meteor_30),findViewById(R.id.main_IMG_meteor_31),findViewById(R.id.main_IMG_meteor_32)},
-                {findViewById(R.id.main_IMG_meteor_40),findViewById(R.id.main_IMG_meteor_41),findViewById(R.id.main_IMG_meteor_42)},
-                {findViewById(R.id.main_IMG_meteor_50),findViewById(R.id.main_IMG_meteor_51),findViewById(R.id.main_IMG_meteor_52)},
-                {findViewById(R.id.main_IMG_meteor_60),findViewById(R.id.main_IMG_meteor_61),findViewById(R.id.main_IMG_meteor_62)},
-                {findViewById(R.id.main_IMG_meteor_70),findViewById(R.id.main_IMG_meteor_71),findViewById(R.id.main_IMG_meteor_72)},
-                {findViewById(R.id.main_IMG_meteor_80),findViewById(R.id.main_IMG_meteor_81),findViewById(R.id.main_IMG_meteor_82)}};
+                {findViewById(R.id.main_IMG_meteor_20), findViewById(R.id.main_IMG_meteor_21), findViewById(R.id.main_IMG_meteor_22)},
+                {findViewById(R.id.main_IMG_meteor_30), findViewById(R.id.main_IMG_meteor_31), findViewById(R.id.main_IMG_meteor_32)},
+                {findViewById(R.id.main_IMG_meteor_40), findViewById(R.id.main_IMG_meteor_41), findViewById(R.id.main_IMG_meteor_42)},
+                {findViewById(R.id.main_IMG_meteor_50), findViewById(R.id.main_IMG_meteor_51), findViewById(R.id.main_IMG_meteor_52)},
+                {findViewById(R.id.main_IMG_meteor_60), findViewById(R.id.main_IMG_meteor_61), findViewById(R.id.main_IMG_meteor_62)},
+                {findViewById(R.id.main_IMG_meteor_70), findViewById(R.id.main_IMG_meteor_71), findViewById(R.id.main_IMG_meteor_72)},
+                {findViewById(R.id.main_IMG_meteor_80), findViewById(R.id.main_IMG_meteor_81), findViewById(R.id.main_IMG_meteor_82)}};
 
-        for (int i =0; i<meteorites.length; i++){
-            for(int j=0; j<meteorites[0].length;j++){
+        for (int i = 0; i < meteorites.length; i++) {
+            for (int j = 0; j < meteorites[0].length; j++) {
                 meteorites[i][j].setVisibility(View.INVISIBLE);
             }
         }
@@ -186,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private int colitionPlace = 0;
+
     private void preformColition() {
 
         colitionPlace = gameRules.getCurrentRocketLocation();
@@ -194,10 +192,8 @@ public class MainActivity extends AppCompatActivity {
         lives[livescount].setVisibility(View.INVISIBLE);
 
         v.vibrate(DELAY);
-        //btn_Right.setEnabled(false);
-        //btn_Left.setEnabled(false);
 
-        if(livescount==0)
+        if (livescount == 0)
             gameOver();
     }
 
@@ -206,15 +202,16 @@ public class MainActivity extends AppCompatActivity {
         btn_Right.setEnabled(false);
         btn_Left.setEnabled(false);
         v.cancel();
+
     }
 
     private void updateRocketUI() {
         int[] currentRocketLoc = gameRules.getRocket();
-        for(int i=0; i<rocketShips.length;i++){
-            if(currentRocketLoc[i] == GameRules.ROCKET){
+        for (int i = 0; i < rocketShips.length; i++) {
+            if (currentRocketLoc[i] == GameRules.ROCKET) {
                 rocketShips[i].setVisibility(View.VISIBLE);
 
-            }else{
+            } else {
                 rocketShips[i].setVisibility(View.INVISIBLE);
             }
         }
